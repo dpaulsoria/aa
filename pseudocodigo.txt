@@ -1,0 +1,50 @@
+Algoritmo: Clasificación de curvas usando Dynamic Time Warping (DTW) *MOD
+
+Funciones:
+
+- dynamic_time_warping(curve1, curve2) -> número:
+    n <- longitud(curve1)
+    m <- longitud(curve2)
+    crear matriz dp de tamaño (n + 1) x (m + 1) inicializada con ceros
+    
+    para i desde 1 hasta n:
+        dp[i][0] <- dp[i-1][0] + distancia(curve1[i-1], curve2[0])
+        
+    para j desde 1 hasta m:
+        dp[0][j] <- dp[0][j-1] + distancia(curve1[0], curve2[j-1])
+    
+    para i desde 1 hasta n:
+        para j desde 1 hasta m:
+            coste <- distancia(curve1[i-1], curve2[j-1])
+            dp[i][j] <- coste + mínimo(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
+    
+    devolver dp[n][m]
+
+- compare_curves_to_reference(reference_curve, curve, threshold=250) -> booleano:
+    dtw_distance <- dynamic_time_warping(reference_curve, curve)
+    devolver dtw_distance <= threshold
+
+- classify_curves_with_reference(reference_curve, curves, threshold=150) -> lista, lista:
+    lista similar_curves vacía
+    lista different_curves vacía
+    
+    para cada curve en curves:
+        si compare_curves_to_reference(reference_curve, curve[1], threshold) es verdadero:
+            agregar curve[0] a similar_curves
+        sino:
+            agregar curve[0] a different_curves
+    
+    devolver similar_curves, different_curves
+
+Inicio:
+
+// Código principal
+referencia <- curva de referencia (especificada por el usuario o el sistema)
+curvas <- lista de curvas para comparar (por ejemplo, leídas desde un archivo)
+
+curvas_similares, curvas_diferentes <- classify_curves_with_reference(referencia, curvas)
+mostrar(curvas_similares)
+mostrar(curvas_diferentes)
+
+Fin
+

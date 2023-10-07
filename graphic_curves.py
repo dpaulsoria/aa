@@ -39,6 +39,6 @@ def plot_curves_from_csv(filename):
     plt.show()
 
 # Usar la función para graficar las curvas desde un archivo "bezier_curves.csv"
-plot_curves_from_csv("bezier_curves.csv")
+plot_curves_from_csv("bezier_curves copy.csv")
 # df = pd.read_csv("bezier_curves.csv")
 # print(df.columns)
